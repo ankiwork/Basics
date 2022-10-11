@@ -1,1 +1,103 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <locale.h>
 
+int main()
+{
+
+    setlocale(LC_ALL, "Russian");
+
+    int i, j;
+    int a[10][12];
+    int range;
+
+    printf("Введите максимально число в матрице: "); scanf_s("%d", &range); printf("\n");
+    while (range <= 0) {
+
+        printf("Введите число, большее чем 0: "); scanf_s("%d", &range);
+
+    }
+
+    printf("\n");
+
+    //printf("Матрица случайных чисел до %d ", range); printf("включительно\n\n");
+    for (i = 0; i < 10; i++) {
+
+        for (j = 0; j < 12; j++) {
+
+            a[i][j] = rand() % range + 1;
+            //printf("%d ", a[i][j]);
+
+        }
+
+        //puts("\n");
+
+    }
+
+    //printf("\n");
+
+    int sr = 0;
+
+    //printf("Левый нижний угол 5x6: \n\n");
+    for (i = 5; i < 10; i++) {
+
+        for (j = 0; j < 6; j++) {
+
+            //printf("%d ", a[i][j]);
+            sr += a[i][j];
+        }
+
+        //puts("\n");
+
+    }
+
+    //printf("\n");
+
+    //printf("Сумма чисел левого нижнего угла: %d", sr);
+
+    //printf("\n");
+
+    //printf("Правый верхний 5x6: \n\n");
+    for (i = 0; i < 5; i++) {
+
+        for (j = 6; j < 12; j++) {
+
+            //printf("%d ", a[i][j]);
+            sr += a[i][j];
+        }
+
+        //puts("\n");
+
+    }
+
+    //printf("\n");
+
+    float srar = 0, col = 60;
+
+    srar = sr / col;
+    printf("Среднее арифметическое заштрихованной области: %.1f\n\n", srar);
+
+    int stolbec;
+    float sr1;
+    
+    for (j = 0; j < 12; j++) {
+
+        stolbec = 0;
+
+        printf("Среднее арифметическое значение %d ", j+1); printf("столбца [");
+
+        for (i = 0; i < 10; i++) {
+            
+            stolbec += a[i][j];
+
+        }
+        
+        sr1 = (float(stolbec / 10));
+        printf("%.1f", sr1); printf("]\n");
+        //("Сумма столбца: %d\n", stolbec);
+        //printf("Среднее значение: %f\n\n", sr1);
+
+    }  
+
+} 
