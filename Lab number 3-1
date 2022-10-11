@@ -1,1 +1,55 @@
+#include <clocale>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define M 10
+
+int index(double a[]) {
+
+	int i, k = 0;
+	double min = a[0];
+
+	for (i = 0; i < M; i++) {
+
+		if (a[i] < min) {
+
+			min = a[i];
+			k = i;
+
+		}
+
+	}
+
+	return(k);
+
+}
+
+int main() {
+
+	setlocale(LC_ALL, "Russian");
+
+	int i, k;
+	double a[M], obhod;
+
+	srand(time(NULL));
+
+	printf("Массив [ ");
+
+	for (i = 0; i < M; i++) {
+		
+		a[i] = 0.2 + rand() % 10 / 3.5;
+		obhod = 0.6 + rand() % 100 / 1.5;
+		a[i] += obhod;
+
+		printf("%.1lf ", a[i]);
+
+        k = index(a);
+
+	}
+
+	printf("]\n\n");
+
+	printf("Индекс минимального значения массива: %d", k);
+
+}
