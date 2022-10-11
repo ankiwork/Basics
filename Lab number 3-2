@@ -1,1 +1,168 @@
+#include <clocale>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define M 20
+#define K M/2
+#define Y 9
+
+int summ(int a[M][M], int p) {
+
+	int i, j, w, s;
+	int v = 0;
+	int sum = 0;
+
+	for (i = 0; i < K; i++) {
+
+		for (j = 0; j < M - 1 - i; j++) {
+
+
+
+		}
+
+		for (w = 0; w < i + 1; w++) {
+
+			s = j;
+
+			sum += a[i][s];
+
+			j++;
+
+		}
+
+	}
+
+	int x = 0, t;
+
+	for (i = K; i < M; i++) {
+
+		for (j = 0; j < K + v; j++) {
+
+
+
+		}
+
+		if (M % 2 == 0) {
+
+			for (t = K; t > x; t--) {
+
+				sum += a[i][t];
+
+			}
+
+			x++;
+
+		}
+		else {
+
+			for (t = K; t >= x; t--) {
+
+				sum += a[i][t];
+
+			}
+
+			x++;
+
+		}
+
+		v++;
+
+	}
+
+	return(sum);
+
+}
+int main() {
+
+	setlocale(LC_ALL, "Russian");
+
+	int i, j, p = 0;
+	int sum;
+	int a[M][M];
+	int v = 0, w;
+
+	srand(time(NULL));
+
+	for (int i = 0; i < M; i++) {
+
+		for (int j = 0; j < M; j++) {
+
+			a[i][j] = 1 + rand() % Y;
+
+		}
+
+	}
+
+	printf("\n\n");
+
+	int s;
+
+	for (i = 0; i < K; i++) {
+
+		for (j = 0; j < M - 1 - i; j++) {
+
+			printf("\x1B[31m%5d\033[0m", a[i][j]);
+
+		}
+
+		for (w = 0; w < i + 1; w++) {
+
+			s = j;
+			
+			printf("\x1B[32m%5d\033[0m", a[i][s]);
+
+			j++;
+
+		}
+
+		printf("\n\n");
+
+	}
+
+	int x = 0, t;
+
+	for (i = K; i < M; i++) {
+
+		for (j = 0; j < K + v; j++) {
+
+			printf("\x1B[31m%5d\033[0m", a[i][j]);
+
+		}
+
+		if (M % 2 == 0) {
+
+			for (t = K; t > x; t--) {
+
+				printf("\x1B[32m%5d\033[0m", a[i][t]);
+				sum = summ(a, p);
+
+			}
+
+			x++;
+
+		}
+		else {
+
+			for (t = K; t >= x; t--) {
+
+				printf("\x1B[32m%5d\033[0m", a[i][t]);
+				sum = summ(a, p);
+
+			}
+
+			x++;
+
+		}
+
+		v++;
+
+		printf("\n\n");
+
+	}
+
+	printf("\n");
+
+	printf("Сумма зелёной области: %d", sum);
+
+}
