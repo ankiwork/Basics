@@ -35,7 +35,6 @@ int main() {
 	srand(time(NULL));
 
 	printf("Массив [ ");
-
 	for (i = 0; i < M; i++) {
 		
 		a[i] = 0.2 + rand() % 10 / 3.5;
@@ -44,10 +43,9 @@ int main() {
 
 		printf("%.1lf ", a[i]);
 
-        k = index(a);
+                k = index(a);
 
 	}
-
 	printf("]\n\n");
 
 	printf("Индекс минимального значения массива: %d", k);
