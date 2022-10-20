@@ -44,9 +44,9 @@ int *FindSrZnach(int *pA[M][N]) {
     
 }
 
-int main(int argc, const char* argv[]) {  //Главная функция
+int main(int argc, const char* argv[]) {  
     
-    srand((unsigned int)time(NULL));  //
+    srand((unsigned int)time(NULL));  
     
     int *pA[M][N];
     int i, j;
@@ -60,11 +60,11 @@ int main(int argc, const char* argv[]) {  //Главная функция
             
             r = 1 + rand() % R;
             pA[i][j] = &r;
-            printf("%5d", *pA[i][j]);  //Вывод значения переменной через указатель
+            printf("%5d", *pA[i][j]);  
 
         }
         
-        printf("\n\n");  //Отступ для красоты + перенос строки
+        printf("\n\n"); 
         
     }
     
