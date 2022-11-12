@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+#define SURNAME 20
+#define NAME    10
+#define GROUP   5
+
+struct STUDENT {
+
+	char* surname [SURNAME];
+	char* name    [NAME];
+	char* group   [GROUP];
+	int   number;
+
+};
+ 
+void AddStudent(STUDENT stud[], int quantity) {
+
+	for (int i = 0; i < quantity; i++) {
+
+		printf("Студент номер %d\n", i + 1);
+
+		printf("Фамилия:      "); scanf_s("%s", &stud[i].surname, sizeof(SURNAME));
+		printf("Имя:          "); scanf_s("%s", &stud[i].name,    sizeof(NAME));
+		printf("Группа:       "); scanf_s("%s", &stud[i].group,   sizeof(GROUP));
+		printf("Номер группы: "); scanf_s("%d", &stud[i].number);
+		
+		printf("\n");
+
+	}
+
+}
+
+int main(int argc, const char* argv[]) {
+
+	setlocale(LC_ALL, "Russian");
+
+	const int quantity = 8;
+
+	struct STUDENT stud[quantity];
+
+	AddStudent(stud, quantity);
+
+}
