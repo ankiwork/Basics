@@ -8,12 +8,29 @@
 
 using namespace std;
 
-struct STUDENT {
+struct STUDENT
+{
+    char* surname;
+    char* name;
+    char* group;
+    int   number;
 
-    char surname [SURNAME];
-    char name    [NAME];
-    char group   [GROUP];
-    int  number;
+    STUDENT() {
+
+        surname = new char [SURNAME];
+        name    = new char [NAME];
+        group   = new char [GROUP];
+        number  = 0;
+
+    }
+  
+    ~STUDENT() {
+
+        delete[] surname;
+        delete[] name;
+        delete[] group;
+
+    }
 
 };
 
