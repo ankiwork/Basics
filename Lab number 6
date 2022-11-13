@@ -9,20 +9,20 @@ struct STUDENT {
     std::string surname;
     std::string name;
     std::string group;
-         int    number = 0;
+    int         number = 0;
 
 };
 
-void InitStudent(STUDENT stud[], int size) {
+void InitStudent(STUDENT stud[], int size) {  //Ввод с клавиатуры информации о 8 студентах
 
     for (int i = 0; i < size; i++) {
 
-        cout << "Студент номер " << i + 1 << ":" << endl;
+        cout << "Студент номер: " << i + 1 << endl;
 
-        cout << "Фамилия:      "; cin >> stud[i].surname;
-        cout << "Имя:          "; cin >> stud[i].name;
-        cout << "Группа:       "; cin >> stud[i].group;
-        cout << "Номер группы: "; cin >> stud[i].number;
+        cout << "Фамилия:       "; cin >> stud[i].surname;
+        cout << "Имя:           "; cin >> stud[i].name;
+        cout << "Группа:        "; cin >> stud[i].group;
+        cout << "Номер группы:  "; cin >> stud[i].number;
 
         cout << endl;
 
@@ -30,14 +30,14 @@ void InitStudent(STUDENT stud[], int size) {
 
 }
 
-void AddStudent(STUDENT stud[], int i) {
+void AddStudent(STUDENT stud[], int i) {  //Добавление нового студента
 
-    cout << "Студент номер " << i << ":" << endl;
+    cout << "Студент номер: " << i << endl;
 
-    cout << "Фамилия:      "; cin >> stud[i].surname;
-    cout << "Имя:          "; cin >> stud[i].name;
-    cout << "Группа:       "; cin >> stud[i].group;
-    cout << "Номер группы: "; cin >> stud[i].number;
+    cout << "Фамилия:       "; cin >> stud[i].surname;
+    cout << "Имя:           "; cin >> stud[i].name;
+    cout << "Группа:        "; cin >> stud[i].group;
+    cout << "Номер группы:  "; cin >> stud[i].number;
 
     cout << endl;
 
@@ -49,29 +49,48 @@ void PrintInfoStudent() {
 
 }
 
-void FindStudentGroup() {
+void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех студентов, состоящих в заданной группе
+    
+    std::string namegroup;  //Переменная для ввода группы с клавиатуры
+    
+    cout << "Введите группу: "; cin >> namegroup; cout << endl;
+    
+    for (int i = 0; i < size; i++) {
+        
+        if (namegroup == stud[i].group) {  //Проверка на ввод, например: if (PIN == PIN) {
+            
+            cout << "Студент номер: " << i + 1 << endl;
+            
+            cout << "Фамилия:       "; cout << stud[i].surname << endl;
+            cout << "Имя:           "; cout << stud[i].name    << endl;
+            cout << "Группа:        "; cout << stud[i].group   << endl;
+            cout << "Номер группы:  "; cout << stud[i].number  << endl;
+            
+            cout << endl;
+            
+        }
 
-
+    }
 
 }
 
 
-void FindStudentNumberGroup() {
+void FindStudentNumberGroup() {  //Поиск всех студентов, состоящих в заданной группе и номере группы
 
 
 
 }
 
 int main() {
-
+    
     setlocale(LC_ALL, "Russian");
-
+    
     int size = 8;
-    struct STUDENT* stud = new STUDENT[size];  
-
-    //InitStudent(stud, size);
-
-    int request = 0;
+    struct STUDENT* stud = new STUDENT[size];  //Позволяет менять значение size в дальнейшем
+    
+    InitStudent(stud, size);
+    
+    int request = 0;  //Переменная для прерывания цикла ниже, когда пользователь введёт [1]
     while (request == 0) {
         
         cout << "Закончить операцию                                            - [1]" << endl;
@@ -79,33 +98,37 @@ int main() {
         cout << "Распечатать информацию о студенте в табличном виде            - [3]" << endl;
         cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
         cout << "Определить всех студентов заданной группы                     - [5]" << endl << endl;
-
-        cout << "Введите номер операцции: ";
+        
+        cout << "Введите номер операции: ";
         cin >> request;
         cout << endl;
-
+        
         switch (request) {
-
-        case 1:
-            break;
-
-        case 2:
-            size++;
-            AddStudent(stud, size);
-
-        case 3:
-            PrintInfoStudent();
-
-        case 4:
-            FindStudentGroup();
-
-        case 5:
-            FindStudentNumberGroup();
-
+                
+            case 1:
+                break;
+                
+            case 2:
+                size++;
+                AddStudent(stud, size);
+                request = 0;
+                
+            case 3:
+                PrintInfoStudent();
+                request = 0;
+                
+            case 4:
+                FindStudentGroup(stud, size);
+                request = 0;
+                
+            case 5:
+                FindStudentNumberGroup();
+                request = 0;
+                
         }
-
+        
     }
-
+    
     delete[] stud;
-
+    
 }
