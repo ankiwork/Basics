@@ -1,93 +1,104 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
+#include <iostream>
+#include <string>
+#include <clocale>
 
-#define SURNAME 20
-#define NAME    10
+#define SURNAME 30
+#define NAME    20
 #define GROUP   5
+
+using namespace std;
 
 struct STUDENT {
 
-	char* surname [SURNAME];
-	char* name    [NAME];
-	char* group   [GROUP];
-	int   number;
+    char surname [SURNAME];
+    char name    [NAME];
+    char group   [GROUP];
+    int  number;
 
 };
 
-void AddStudent(STUDENT stud[], int quantity) {
+void InitStudent(STUDENT stud[], int quantity) {
 
-	for (int i = 0; i < quantity; i++) {
+    for (int i = 0; i < quantity; i++) {
 
-		printf("Студент номер %d\n", i + 1);
+        cout << "Студент номер " << i + 1 << ":" << endl;
 
-		printf("Фамилия:      "); scanf_s("%s", &stud[i].surname, sizeof(SURNAME));
-		printf("Имя:          "); scanf_s("%s", &stud[i].name,    sizeof(NAME));
-		printf("Группа:       "); scanf_s("%s", &stud[i].group,   sizeof(GROUP));
-		printf("Номер группы: "); scanf_s("%d", &stud[i].number);
+        cout << "Фамилия:      "; cin >> stud[i].surname;
+        cout << "Имя:          "; cin >> stud[i].name;
+        cout << "Группа:       "; cin >> stud[i].group;
+        cout << "Номер группы: "; cin >> stud[i].number;
 
-		printf("\n");
+        cout << endl;
 
-	}
-
-}
-
-void AddNewStudent(STUDENT stud[], int quantity) {
-
-
+    }
 
 }
 
-void FindStudent(STUDENT stud[], int quantity, char** direction) {
-
-	for (int i = 0; i < quantity; i++) {
-
-		if (direction == stud[i].group) {
+void AddStudent() {
 
 
-
-		}
-
-	}
 
 }
 
-int main(int argc, const char* argv[]) {
+void PrintInfoStudent() {
 
-	setlocale(LC_ALL, "Russian");
 
-	const int quantity = 8;
 
-	int request = 0;
+}
 
-	struct STUDENT stud[quantity];
+void FindStudentGroup() {
 
-	AddStudent(stud, quantity);
 
-	while (request == 0) {
 
-		printf("Введите цифру, соответствующую вашему запросу:\n\nЗакончить операцию                        - [1]\nДобавить информацию о новом студенте      - [2]\nРаспечатать ифнормацию о новом студенте   - [3]\nОпределить студента по группе             - [4]\nОпределить всех студентов заданной группы - [5]\n"); 
-		scanf_s("%d", &request);
+}
 
-		switch (request) {
 
-		    case 1:
-				break;
+void FindStudentNumberGroup() {
 
-			case 2:
 
-				AddNewStudent(stud, quantity);
 
-			case 3:
+}
 
-				char* direction [GROUP];
+int main() {
 
-				printf("Введите название группы: "); scanf_s("%s", &direction);
+    setlocale(LC_ALL, "Russian");
 
-				FindStudent(stud, quantity, direction);
+    const int quantity = 8;
+    struct STUDENT stud[quantity];
 
-		} 
+    InitStudent(stud, quantity);
 
-	}
+    int request = 0;
+    while (request == 0) {
+
+        cout << "Закончить операцию                                            - [1]" << endl;
+        cout << "Добавить информацию о новом студенте                          - [2]" << endl;
+        cout << "Распечатать информацию о студенте в табличном виде            - [3]" << endl;
+        cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
+        cout << "Определить всех студентов заданной группы                     - [5]" << endl << endl;
+
+        cout << "Введите номер операцции: "; 
+        cin >> request;
+
+        switch (request) {
+
+            case 1:
+                break;
+
+            case 2:
+                AddStudent();
+
+            case 3:
+                PrintInfoStudent();
+
+            case 4:
+                FindStudentGroup();
+
+            case 5:
+                FindStudentNumberGroup();
+
+        }
+
+    }
 
 }
