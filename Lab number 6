@@ -2,41 +2,20 @@
 #include <string>
 #include <clocale>
 
-#define SURNAME 30
-#define NAME    20
-#define GROUP   5
-
 using namespace std;
 
-struct STUDENT
-{
-    char* surname;
-    char* name;
-    char* group;
-    int   number;
+struct STUDENT {
 
-    STUDENT() {
-
-        surname = new char [SURNAME];
-        name    = new char [NAME];
-        group   = new char [GROUP];
-        number  = 0;
-
-    }
-  
-    ~STUDENT() {
-
-        delete[] surname;
-        delete[] name;
-        delete[] group;
-
-    }
+    std::string surname;
+    std::string name;
+    std::string group;
+         int    number = 0;
 
 };
 
-void InitStudent(STUDENT stud[], int quantity) {
+void InitStudent(STUDENT stud[], int size) {
 
-    for (int i = 0; i < quantity; i++) {
+    for (int i = 0; i < size; i++) {
 
         cout << "Студент номер " << i + 1 << ":" << endl;
 
@@ -51,9 +30,16 @@ void InitStudent(STUDENT stud[], int quantity) {
 
 }
 
-void AddStudent() {
+void AddStudent(STUDENT stud[], int i) {
 
+    cout << "Студент номер " << i << ":" << endl;
 
+    cout << "Фамилия:      "; cin >> stud[i].surname;
+    cout << "Имя:          "; cin >> stud[i].name;
+    cout << "Группа:       "; cin >> stud[i].group;
+    cout << "Номер группы: "; cin >> stud[i].number;
+
+    cout << endl;
 
 }
 
@@ -80,42 +66,46 @@ int main() {
 
     setlocale(LC_ALL, "Russian");
 
-    const int quantity = 8;
-    struct STUDENT stud[quantity];
+    int size = 8;
+    struct STUDENT* stud = new STUDENT[size];  
 
-    InitStudent(stud, quantity);
+    //InitStudent(stud, size);
 
     int request = 0;
     while (request == 0) {
-
+        
         cout << "Закончить операцию                                            - [1]" << endl;
         cout << "Добавить информацию о новом студенте                          - [2]" << endl;
         cout << "Распечатать информацию о студенте в табличном виде            - [3]" << endl;
         cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
         cout << "Определить всех студентов заданной группы                     - [5]" << endl << endl;
 
-        cout << "Введите номер операцции: "; 
+        cout << "Введите номер операцции: ";
         cin >> request;
+        cout << endl;
 
         switch (request) {
 
-            case 1:
-                break;
+        case 1:
+            break;
 
-            case 2:
-                AddStudent();
+        case 2:
+            size++;
+            AddStudent(stud, size);
 
-            case 3:
-                PrintInfoStudent();
+        case 3:
+            PrintInfoStudent();
 
-            case 4:
-                FindStudentGroup();
+        case 4:
+            FindStudentGroup();
 
-            case 5:
-                FindStudentNumberGroup();
+        case 5:
+            FindStudentNumberGroup();
 
         }
 
     }
+
+    delete[] stud;
 
 }
