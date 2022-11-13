@@ -85,7 +85,7 @@ int main() {
     
     setlocale(LC_ALL, "Russian");
     
-    int size = 8;
+    int size = 8;  //Минимум из условия задачи 
     struct STUDENT* stud = new STUDENT[size];  //Позволяет менять значение size в дальнейшем
     
     InitStudent(stud, size);
