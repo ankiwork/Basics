@@ -75,18 +75,38 @@ void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех сту�
 }
 
 
-void FindStudentNumberGroup() {  //Поиск всех студентов, состоящих в заданной группе и номере группы
+void FindStudentNumberGroup(STUDENT stud[], int size) {  //Поиск всех студентов, состоящих в заданной группе и номере группы
 
-
-
+    std::string namegroup;  //Переменная для ввода группы с клавиатуры
+    int         numbergroup;  //Переменная для ввода группы с клавиатуры
+    
+    cout << "Введите группу: "; cin >> namegroup; cout << endl;
+    cout << "Введите номер группы: "; cin >> numbergroup; cout << endl << endl;
+    
+    for (int i = 0; i < size; i++) {
+        
+        if ((namegroup == stud[i].group) && (numbergroup == stud[i].number)) {  //Проверка на ввод, например: if (PIN == PIN) {
+            
+            cout << "Студент номер: " << i + 1 << endl;
+            
+            cout << "Фамилия:       "; cout << stud[i].surname << endl;
+            cout << "Имя:           "; cout << stud[i].name    << endl;
+            cout << "Группа:        "; cout << stud[i].group   << endl;
+            cout << "Номер группы:  "; cout << stud[i].number  << endl;
+            
+            cout << endl;
+            
+        }
+    }
+    
 }
 
 int main() {
     
     setlocale(LC_ALL, "Russian");
     
-    int size = 8;  //Минимум из условия задачи 
-    struct STUDENT* stud = new STUDENT[size];  //Позволяет менять значение size в дальнейшем
+    int size = 8;
+    struct STUDENT* stud = new STUDENT[size];
     
     InitStudent(stud, size);
     
@@ -122,7 +142,7 @@ int main() {
                 request = 0;
                 
             case 5:
-                FindStudentNumberGroup();
+                FindStudentNumberGroup(stud, size);
                 request = 0;
                 
         }
