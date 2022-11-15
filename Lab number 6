@@ -132,18 +132,22 @@ int main() {
                 size++;
                 AddStudent(stud, size);
                 request = 0;
+                break;
                 
             case 3:
                 PrintInfoStudent();
                 request = 0;
+                break;
                 
             case 4:
                 FindStudentGroup(stud, size);
                 request = 0;
+                break;
                 
             case 5:
                 FindStudentNumberGroup(stud, size);
                 request = 0;
+                break;
                 
         }
         
