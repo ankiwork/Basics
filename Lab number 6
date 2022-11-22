@@ -17,9 +17,9 @@ struct STUDENT {
     STUDENT() {
 
         surname = new char[SURNAME];
-        name    = new char[NAME];
-        group   = new char[GROUP];
-        number  = 0;
+        name = new char[NAME];
+        group = new char[GROUP];
+        number = 0;
 
     }
 
@@ -86,9 +86,18 @@ void AddStudent(STUDENT stud[], int i) {  //Добавление нового с
 
 }
 
-void PrintInfoStudent() {
+void PrintInfoStudent(STUDENT stud[], int size) {
 
+    int number;  //Переменная для ввода группы с клавиатуры
 
+    cout << "Введите номер студента: "; cin >> number; cout << endl;
+
+    cout << "#------------#--------------#" << endl;
+    cout << "|" << "Фамилия     " << "|" << stud[number].surname << endl;
+    cout << "|" << "Имя         " << "|" << stud[number].name    << endl;
+    cout << "|" << "Группа      " << "|" << stud[number].group   << endl;
+    cout << "|" << "Номер группы" << "|" << stud[number].number  << endl;
+    cout << "#------------#--------------#" << endl;
 
 }
 
@@ -135,7 +144,7 @@ int main() {
 
     setlocale(LC_ALL, "Russian");
 
-    int size = 8;
+    int size = 1;
     struct STUDENT* stud = new STUDENT[size];
 
     InitStudent(stud, size);
@@ -165,7 +174,7 @@ int main() {
             break;
 
         case 3:
-            PrintInfoStudent();
+            PrintInfoStudent(stud, size);
             request = 0;
             break;
 
