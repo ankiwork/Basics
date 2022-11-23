@@ -59,7 +59,7 @@ void AddStudentInformation(STUDENT stud[], int i) {
 
 }
 
-void UpLoadStudentGropuName(STUDENT stud[], int i) {
+void UpLoadStudentGroupName(STUDENT stud[], int i) {
 
     cout << "Студент номер: " << i + 1 << endl;
 
@@ -80,30 +80,42 @@ void InitStudent(STUDENT stud[], int size) {  //Ввод с клавиатуры
 
 }
 
-void AddStudent(STUDENT stud[], int i) {  //Добавление нового студента
-
-    AddStudentInformation(stud, i);
-
+void AddStudent(STUDENT* &stud, int& size) {  //Добавление нового студента
+    STUDENT* tmp = new STUDENT[size + 1];
+    for (int i = 0; i < size; i++) {
+        strcpy_s(tmp[i].surname, strlen(stud[i].surname) + 1, stud[i].surname);
+        strcpy_s(tmp[i].name, strlen(stud[i].name) + 1, stud[i].name);
+        strcpy_s(tmp[i].group, strlen(stud[i].group) + 1, stud[i].group);
+        tmp[i].number = stud[i].number;
+    }
+    AddStudentInformation(tmp, size);
+    size++;
+    delete[] stud;
+    stud = tmp;
 }
 
 void PrintInfoStudent(STUDENT stud[], int size) {
 
     int number;  //Переменная для ввода группы с клавиатуры
-
     cout << "Введите номер студента: "; cin >> number; cout << endl;
+    /*while (number >= size) {
 
-    cout << "#------------#--------------#" << endl;
-    cout << "|" << "Фамилия     " << "|" << stud[number].surname << endl;
-    cout << "|" << "Имя         " << "|" << stud[number].name    << endl;
-    cout << "|" << "Группа      " << "|" << stud[number].group   << endl;
-    cout << "|" << "Номер группы" << "|" << stud[number].number  << endl;
-    cout << "#------------#--------------#" << endl;
+        cout << "Повторите ввод: "; cin >> size;
+
+    }*/
+
+    cout << "#------------#---#" << endl;
+    cout << "|" << "Фамилия     " << "|" << stud[number].surname << "|" << endl;
+    cout << "|" << "Имя         " << "|" << stud[number].name    << "|" << endl;
+    cout << "|" << "Группа      " << "|" << stud[number].group   << "|" << endl;
+    cout << "|" << "Номер группы" << "|" << stud[number].number  << " |" << endl;
+    cout << "#------------#---#" << endl;
 
 }
 
 void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех студентов, состоящих в заданной группе
 
-    std::string namegroup;  //Переменная для ввода группы с клавиатуры
+    char* namegroup = NULL;  //Переменная для ввода группы с клавиатуры
 
     cout << "Введите группу: "; cin >> namegroup; cout << endl;
 
@@ -111,7 +123,7 @@ void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех сту�
 
         if (namegroup == stud[i].group) {  //Проверка на ввод, например: if (PIN == PIN) {
 
-            UpLoadStudentGropuName(stud, i);
+            UpLoadStudentGroupName(stud, i);
 
         }
 
@@ -122,8 +134,8 @@ void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех сту�
 
 void FindStudentNumberGroup(STUDENT stud[], int size) {  //Поиск всех студентов, состоящих в заданной группе и номере группы
 
-    std::string namegroup;  //Переменная для ввода группы с клавиатуры
-    int         numbergroup;  //Переменная для ввода группы с клавиатуры
+    char* namegroup = NULL;  //Переменная для ввода группы с клавиатуры
+    int   numbergroup;  //Переменная для ввода группы с клавиатурыw
 
     cout << "Введите группу: "; cin >> namegroup;
     cout << "Введите номер группы: "; cin >> numbergroup; cout << endl;
@@ -132,7 +144,7 @@ void FindStudentNumberGroup(STUDENT stud[], int size) {  //Поиск всех �
 
         if ((namegroup == stud[i].group) && (numbergroup == stud[i].number)) {  //Проверка на ввод, например: if (PIN == PIN) {
 
-            UpLoadStudentGropuName(stud, i);
+            UpLoadStudentGroupName(stud, i);
 
         }
 
@@ -168,7 +180,6 @@ int main() {
             break;
 
         case 2:
-            size++;
             AddStudent(stud, size);
             request = 0;
             break;
