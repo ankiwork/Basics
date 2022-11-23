@@ -1,6 +1,9 @@
 #include <iostream>
 #include <clocale>
 
+using na#include <iostream>
+#include <clocale>
+
 using namespace std;
 
 #define SURNAME 20
@@ -117,7 +120,9 @@ void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех сту�
 
     char* namegroup = NULL;  //Переменная для ввода группы с клавиатуры
 
-    cout << "Введите группу: "; cin >> namegroup; cout << endl;
+    //cout << "Введите группу: "; cin >> namegroup; cout << endl;
+
+    cin.getline(namegroup, 10000);
 
     for (int i = 0; i < size; i++) {
 
@@ -135,7 +140,9 @@ void FindStudentGroup(STUDENT stud[], int size) {  //Поиск всех сту�
 void FindStudentNumberGroup(STUDENT stud[], int size) {  //Поиск всех студентов, состоящих в заданной группе и номере группы
 
     char* namegroup = NULL;  //Переменная для ввода группы с клавиатуры
-    int   numbergroup;  //Переменная для ввода группы с клавиатурыw
+    int   numbergroup;  //Переменная для ввода группы с клавиатуры
+
+    cin.getline(namegroup, 10000);
 
     cout << "Введите группу: "; cin >> namegroup;
     cout << "Введите номер группы: "; cin >> numbergroup; cout << endl;
