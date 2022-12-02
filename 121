@@ -1,0 +1,34 @@
+#include <iostream>
+
+#define SIZE 100
+
+using namespace std;
+
+struct Student {
+	char* surname;
+    Student() {
+        surname = new char[SIZE];
+    }
+    ~Student() {
+        delete[] surname;
+    }
+};
+
+void EnteringInformationAboutStudents(Student stud[], int i) {
+	cout << "Enter the student's last name: "; cin >> stud[i].surname;
+}
+
+void AddingTheFirstStudents(Student stud[], int size) {
+	for (int i = 0; i < size; i++) {
+		cout << "Student number " << i + 1 << endl;
+		EnteringInformationAboutStudents(stud, i);
+		cout << endl;
+	}
+}
+
+int main() {
+	int size = 2;
+	Student* stud = new Student[size];
+	AddingTheFirstStudents(stud, size);
+
+}
