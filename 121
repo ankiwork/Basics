@@ -6,29 +6,115 @@ using namespace std;
 
 struct Student {
 	char* surname;
-    Student() {
+	char* name;
+	char* group;
+	int   number;
+    Student() {  //Конструктор
         surname = new char[SIZE];
+		name = new char[SIZE];
+		group = new char[SIZE];
+		number = 0;
     }
-    ~Student() {
+    ~Student() {  //Деструктор 
         delete[] surname;
+		delete[] name;
+		delete[] group;
     }
 };
 
-void EnteringInformationAboutStudents(Student stud[], int i) {
-	cout << "Enter the student's last name: "; cin >> stud[i].surname;
+void EnteringInformationAboutStudents(Student stud[], int i) {  //Типо ввод инфы
+	cout << "Enter the student's last name:    "; cin >> stud[i].surname; 
+	cout << "Enter the student's name:         "; cin >> stud[i].name;
+	cout << "Enter the student's group:        "; cin >> stud[i].group;
+	cout << "Enter the student's group number: "; cin >> stud[i].number;
+	system("cls");
+}
+
+int EnteringTheOperationNumber(int number) {  //Прост список с операциями
+	cout << "Enter the operation number" << endl;
+	cout << "Finish the operation                                - [1]" << endl;
+	cout << "Add information about a new student                 - [2]" << endl;
+	cout << "Print information about the student in tabular form - [3]" << endl;
+	cout << "Identify all students in a given field of study     - [4]" << endl;
+	cout << "Identify all students of a given group              - [5]" << endl;
+	cout << "Operation number: "; cin >> number;
+	cout << endl;
+	system("cls");
+	return number;
 }
 
 void AddingTheFirstStudents(Student stud[], int size) {
 	for (int i = 0; i < size; i++) {
 		cout << "Student number " << i + 1 << endl;
 		EnteringInformationAboutStudents(stud, i);
-		cout << endl;
 	}
 }
 
-int main() {
-	int size = 2;
-	Student* stud = new Student[size];
-	AddingTheFirstStudents(stud, size);
+void ConclusionOfInformationAboutTheStudent(Student stud[], int i) {
+	cout << "#---------------------------------#"             << endl;
+	cout << "|Student's last name   |" << stud[i - 1].surname << endl;
+	cout << "|---------------------------------#"             << endl;
+	cout << "|Student's name        |" << stud[i - 1].name    << endl;
+	cout << "|---------------------------------#"             << endl;
+	cout << "|Student's group       |" << stud[i - 1].group   << endl;
+	cout << "|---------------------------------#"             << endl;
+	cout << "|Student's group number|" << stud[i - 1].number  << endl;
+	cout << "#---------------------------------#"             << endl;
+	cout << endl;
+}
 
+void AddingANewStudent(int i) {
+	Student* stud = (Student*) new Student[i + 1];  //Понятие не имею как это работает, благо ошибку не выбивает и вроде доп память выделяет
+	cout << "Student number " << i << endl;
+	EnteringInformationAboutStudents(stud, i);
+	cout << endl;
+}
+
+void PrintInformationAboutTheStudentInTabularForm(Student stud[]) {
+	int number = 0;
+	cout << "Enter the student's number: "; cin >> number;
+	ConclusionOfInformationAboutTheStudent(stud, number);
+}
+
+void IdentifyAllStudentsInAGivenFieldOfStudy() {
+
+}
+
+void IdentifyAllStudentsOfAGivenGroup() {
+
+}
+
+int main() {
+	/*
+	 * Добавление первых "size" студентов
+	*/
+	int size = 1;
+	Student* stud = new Student[size];  
+	AddingTheFirstStudents(stud, size);
+	/*
+	 * Дальнейший блок с операциями из задания
+	*/
+	int number = 0;
+	while (number != 1) {  //Повтор запроса, пока пользователь сам не оборвёт
+		number = EnteringTheOperationNumber(number);
+		switch (number) {
+		case 1:
+			break;
+		case 2:
+			size++;
+			AddingANewStudent(size);
+			system("cls");
+			break;
+		case 3:
+			PrintInformationAboutTheStudentInTabularForm(stud);
+			break;
+		case 4:
+			IdentifyAllStudentsInAGivenFieldOfStudy();
+			break;
+		case 5:
+			IdentifyAllStudentsOfAGivenGroup();
+			break;
+		}
+	}
+	return 0;
 }
