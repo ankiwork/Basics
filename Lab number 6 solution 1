@@ -1,9 +1,6 @@
 #include <iostream>
 #include <clocale>
 
-using na#include <iostream>
-#include <clocale>
-
 using namespace std;
 
 #define SURNAME 20
