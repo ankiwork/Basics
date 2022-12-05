@@ -2,54 +2,174 @@
 
 using namespace std;
 
-template <typename T>
-class Student {
-public:
-	Student();
-	~Student();
-	void push_back(T data);
-private:
-	template <typename T>
-	class Node {
-	public:
-		Node* pNext;
-		T data;
-		Node(T data = T(), Node* pNext = nullptr) {
-			this->data = data;
-			this->pNext = pNext;
-		}
-	};
-	int size;
-	Node<T>* head;
+struct Student {
+    char surname [40];
+    char name    [40];
+    char group   [10];
+    int  number;
 };
 
-template <typename T>
-Student<T>::Student() {
-	size = 0;
-	head = nullptr;
+int InitializingBasicStudents(Student* stud) {
+    int i = 0;
+    //1
+    strcpy_s(stud[i].surname, "Thomas");
+    strcpy_s(stud[i].name,    "John");
+    strcpy_s(stud[i].group,   "IVT");
+             stud[i].number = 11;
+    i++;
+    //2
+    strcpy_s(stud[i].surname, "Taylor");
+    strcpy_s(stud[i].name,    "Michael");
+    strcpy_s(stud[i].group,   "IVT");
+             stud[i].number = 11;
+    i++;
+    //3
+    strcpy_s(stud[i].surname, "Swanson");
+    strcpy_s(stud[i].name,    "Bradley");
+    strcpy_s(stud[i].group,   "IVT");
+             stud[i].number = 12;
+    i++;
+    //4
+    strcpy_s(stud[i].surname, "Stewart");
+    strcpy_s(stud[i].name,    "Jeffrey");
+    strcpy_s(stud[i].group,   "IVT");
+             stud[i].number = 12;
+    i++;
+    //5
+    strcpy_s(stud[i].surname, "Evans");
+    strcpy_s(stud[i].name,    "Kenneth");
+    strcpy_s(stud[i].group,   "PIN");
+             stud[i].number = 13;
+    i++;
+    //6
+    strcpy_s(stud[i].surname, "Welch");
+    strcpy_s(stud[i].name,    "Howard");
+    strcpy_s(stud[i].group,   "PIN");
+             stud[i].number = 13;
+    i++;
+    //7
+    strcpy_s(stud[i].surname, "Burke");
+    strcpy_s(stud[i].name,    "Adam");
+    strcpy_s(stud[i].group,   "PIN");
+             stud[i].number = 14;
+    i++;
+    //8
+    strcpy_s(stud[i].surname, "Swanson");
+    strcpy_s(stud[i].name,    "Bradley");
+    strcpy_s(stud[i].group,   "PIN");
+             stud[i].number = 14;
+    i++;
+ 
+    return i;
 }
 
-template <typename T>
-Student<T>::~Student() {
-
+int AddingNewStudent(Student* stud, int i) {
+    cout << "Студент номер " << i + 1 << endl;
+    //i + 1
+    cout << "Фамилия: "; cin >> stud[i].surname;
+    cout << "Фамилия: "; cin >> stud[i].name;
+    cout << "Фамилия: "; cin >> stud[i].group;
+    cout << "Фамилия: "; cin >> stud[i].number;
+    i++;
+    return i;
 }
 
-template<typename T>
-void Student<T>::push_back(T data) {
-	if (head == nullptr) {
-		head = new Node<T>(data);
-	} 
-	else {
-		Node<T>* current = this->head;
-		while (current->pNext != nullptr) {
-			current = current->pNext;
-		}
-		current->pNext = new Node<T>(data);
-	}
+void OutputtingInformationTable(Student* stud) {
+    int number = 0;
+    cout << "--------------------------" << endl;
+    cout << "Введите номер студента: "; cin >> number;
+    cout << "--------------------------"  << endl;
+    cout << "Фамилия     |" << stud[number - 1].surname << endl;
+    cout << "Имя         |" << stud[number - 1].name    << endl;
+    cout << "Группа      |" << stud[number - 1].group   << endl;
+    cout << "Номер группы|" << stud[number - 1].number  << endl;
+    cout << "--------------------------"  << endl;
+}
+
+void DetermineDirectionPreparation(Student* stud, int number) {
+    char group[10];
+    cout << "Введите группу: "; cin >> group;
+    for (int i = 0; i < number; i++) {
+        if (group == stud[i].group) {
+            cout << "Студент номер: " << i + 1           << endl;
+            cout << "Фамилия:       " << stud[i].surname << endl;
+            cout << "Имя:           " << stud[i].name    << endl;
+            cout << "Группа:        " << stud[i].group   << endl;
+            cout << "Номер группы:  " << stud[i].number  << endl;
+        }
+    }
+}
+
+void DetermineDirectionPreparationNumber(Student* stud, int number) {
+    char group[10];
+    cout << "Введите группу: "; cin >> group;
+    int number1 = 0;
+    cout << "Введите номер группы: "; cin >> number1;
+    for (int i = 0; i < number; i++) {
+        if ((group == stud[i].group) && (number1 == stud[i].number)) {
+            cout << "Студент номер: " << i + 1           << endl;
+            cout << "Фамилия:       " << stud[i].surname << endl;
+            cout << "Имя:           " << stud[i].name    << endl;
+            cout << "Группа:        " << stud[i].group   << endl;
+            cout << "Номер группы:  " << stud[i].number  << endl;
+        }
+    }
+}
+
+int WorkingWithTheUser(Student* stud, int size, int number) {
+    int client = NULL;
+    while (client != 1) {
+        /*
+        * Вывод/Ввод информации, для реализации ниже 
+        */
+        cout << "Закончить операцию                                            - [1]" << endl;
+        cout << "Добавить информацию о новом студенте                          - [2]" << endl;
+        cout << "Распечатать информацию о студенте в табличном виде            - [3]" << endl;
+        cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
+        cout << "Определить всех студентов заданной группе и номеру группы     - [5]" << endl;
+        cout << "Введите номер операции: "; 
+        cin >> client;
+        system("cls");
+        /*
+        * Блок с операциями
+        */
+        switch (client) {
+            case 1: {
+                break;
+            }
+            case 2: {
+                number = AddingNewStudent(stud, number);
+                system("cls");
+                break;
+            }
+            case 3: {
+                OutputtingInformationTable(stud);
+                break;
+            }
+            case 4: {
+                DetermineDirectionPreparation(stud, number);
+                break;
+            }
+            case 5: {
+                DetermineDirectionPreparationNumber(stud, number);
+                break;
+            }
+        }
+    }
+    return number;
 }
 
 int main() {
-	Student<int> stud;
-	stud.push_back(5);
-	return 0;
+    //
+    setlocale(LC_ALL, "Russian");
+    /*
+    * Объявление структуры внутри main и начальное задание условий
+    */
+    const int size = 100; 
+    Student* stud = new Student[size];
+    int number = InitializingBasicStudents(stud);  //Инициализируем "вручную" первые 8 студентов из условия задачи
+    /*
+    * Работа с пользователем(Реализация операций из условия)
+    */
+    WorkingWithTheUser(stud, size, number);
 }
