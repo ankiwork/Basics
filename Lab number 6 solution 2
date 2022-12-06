@@ -2,61 +2,76 @@
 
 using namespace std;
 
+#define SURNAME 20
+#define NAME    10
+#define GROUP   5
+
 struct Student {
-    char surname[40];
-    char name[40];
-    char group[10];
-    int  number;
+    const char* surname;
+    const char* name;
+    const char* group;
+    int   number;
+    Student() {
+        surname = new char[SURNAME];
+        name = new char[NAME];
+        group = new char[GROUP];
+        number = 0;
+    }
+    ~Student() {
+        delete[] surname;
+        delete[] name;
+        delete[] group;
+    }
 };
 
 int InitializingBasicStudents(Student* stud) {
     int i = 0;
     //1
-    strcpy_s(stud[i].surname, "Thomas");
-    strcpy_s(stud[i].name, "John");
-    strcpy_s(stud[i].group, "IVT");
+    stud[i].surname = "Thomas";
+    stud[i].name = "John";
+    stud[i].group = "IVT";
     stud[i].number = 11;
     i++;
     //2
-    strcpy_s(stud[i].surname, "Taylor");
-    strcpy_s(stud[i].name, "Michael");
-    strcpy_s(stud[i].group, "IVT");
+    stud[i].surname = "Taylor";
+    stud[i].name = "Michael";
+    stud[i].group = "IVT";
     stud[i].number = 11;
     i++;
     //3
-    strcpy_s(stud[i].surname, "Swanson");
-    strcpy_s(stud[i].name, "Bradley");
-    strcpy_s(stud[i].group, "IVT");
+    stud[i].surname = "Swanson";
+    stud[i].name = "Bradley";
+    stud[i].group = "IVT";
     stud[i].number = 12;
     i++;
     //4
-    strcpy_s(stud[i].surname, "Stewart");
-    strcpy_s(stud[i].name, "Jeffrey");
-    strcpy_s(stud[i].group, "IVT");
+    stud[i].surname = "Stewart";
+    stud[i].name = "Jeffrey";
+    stud[i].group = "IVT";
     stud[i].number = 12;
     i++;
     //5
-    strcpy_s(stud[i].surname, "Evans");
-    strcpy_s(stud[i].name, "Kenneth");
-    strcpy_s(stud[i].group, "PIN");
+    stud[i].surname = "Evans";
+    stud[i].name = "Kenneth";
+    stud[i].group = "PIN";
     stud[i].number = 13;
     i++;
     //6
-    strcpy_s(stud[i].surname, "Welch");
-    strcpy_s(stud[i].name, "Howard");
-    strcpy_s(stud[i].group, "PIN");
+    stud[i].surname = "Welch";
+    stud[i].name = "Howard";
+    stud[i].group = "PIN";
     stud[i].number = 13;
     i++;
     //7
-    strcpy_s(stud[i].surname, "Burke");
-    strcpy_s(stud[i].name, "Adam");
-    strcpy_s(stud[i].group, "PIN");
+    stud[i].surname = "Burke";
+    stud[i].name = "Adam";
+    stud[i].group = "PIN";
     stud[i].number = 14;
     i++;
     //8
-    strcpy_s(stud[i].surname, "Swanson");
-    strcpy_s(stud[i].name, "Bradley");
-    strcpy_s(stud[i].group, "PIN");
+    stud[i].surname = "Swanson";
+    stud[i].name = "Bradley";
+    stud[i].group = "PIN";
     stud[i].number = 14;
     i++;
 
@@ -66,10 +81,10 @@ int InitializingBasicStudents(Student* stud) {
 int AddingNewStudent(Student* stud, int i) {
     cout << "Студент номер " << i + 1 << endl;
     //i + 1
-    cout << "Фамилия: "; cin >> stud[i].surname;
-    cout << "Фамилия: "; cin >> stud[i].name;
-    cout << "Фамилия: "; cin >> stud[i].group;
-    cout << "Фамилия: "; cin >> stud[i].number;
+    cout << "Фамилия:      "; cin >> stud[i].surname;
+    cout << "Имя:          "; cin >> stud[i].name;
+    cout << "Группа:       "; cin >> stud[i].group;
+    cout << "Номер группы: "; cin >> stud[i].number;
     i++;
     return i;
 }
@@ -134,26 +149,26 @@ int WorkingWithTheUser(Student* stud, int size, int number) {
         * Блок с операциями
         */
         switch (client) {
-            case 1: {
-                break;
-            }
-            case 2: {
-                number = AddingNewStudent(stud, number);
-                system("cls");
-                break;
-            }
-            case 3: {
-                OutputtingInformationTable(stud);
-                break;
-            }
-            case 4: {
-                DetermineDirectionPreparation(stud, number);
-                break;
-            }
-            case 5: {
-                DetermineDirectionPreparationNumber(stud, number);
-                break;
-            }
+        case 1: {
+            break;
+        }
+        case 2: {
+            number = AddingNewStudent(stud, number);
+            system("cls");
+            break;
+        }
+        case 3: {
+            OutputtingInformationTable(stud);
+            break;
+        }
+        case 4: {
+            DetermineDirectionPreparation(stud, number);
+            break;
+        }
+        case 5: {
+            DetermineDirectionPreparationNumber(stud, number);
+            break;
+        }
         }
     }
     return number;
