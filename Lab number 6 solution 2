@@ -106,12 +106,12 @@ void DetermineDirectionPreparationNumber(Student* stud, int number) {
     int number1 = 0;
     cout << "Введите номер группы: "; cin >> number1; cout << endl;
     for (int i = 0; i < number; i++) {
-        if ((group == stud[i].group) && (number1 == stud[i].number)) {
+        if ((strcmp(group, stud[i].group) == 0) && (number1 == stud[i].number)) {
             cout << "Студент номер: " << i + 1 << endl;
             cout << "Фамилия:       " << stud[i].surname << endl;
             cout << "Имя:           " << stud[i].name << endl;
             cout << "Группа:        " << stud[i].group << endl;
-            cout << "Номер группы:  " << stud[i].number << endl;
+            cout << "Номер группы:  " << stud[i].number << endl << endl;
         }
     }
 }
