@@ -49,7 +49,7 @@ int InitializingBasicStudents(Student* stud) {
     char name1[] = "Thomas";
     char surname1[] = "John";
     char group1[] = "IVT";
-    strcpy_s(stud[i].surname, sizeof(name1),name1);
+    strcpy_s(stud[i].surname, sizeof(name1), name1);
     strcpy_s(stud[i].name, sizeof(surname1), surname1);
     strcpy_s(stud[i].group, sizeof(group1), group1);
     stud[i].number = 11;
@@ -75,7 +75,7 @@ int InitializingBasicStudents(Student* stud) {
     //4
     char name4[] = "Evans";
     char surname4[] = "Kenneth";
-    char group4[] = "PIN";
+    char group4[] = "IVT";
     strcpy_s(stud[i].surname, sizeof(name4), name4);
     strcpy_s(stud[i].name, sizeof(surname4), surname4);
     strcpy_s(stud[i].group, sizeof(group4), group4);
@@ -102,7 +102,7 @@ int InitializingBasicStudents(Student* stud) {
     //7
     char name7[] = "Swanson";
     char surname7[] = "Bradley";
-    char group7[] = "IVT";
+    char group7[] = "PIN";
     strcpy_s(stud[i].surname, sizeof(name7), name7);
     strcpy_s(stud[i].name, sizeof(surname7), surname7);
     strcpy_s(stud[i].group, sizeof(group7), group7);
@@ -111,7 +111,7 @@ int InitializingBasicStudents(Student* stud) {
     //8
     char name8[] = "Slowly";
     char surname8[] = "Teddy";
-    char group8[] = "IVT";
+    char group8[] = "PIN";
     strcpy_s(stud[i].surname, sizeof(name8), name8);
     strcpy_s(stud[i].name, sizeof(surname8), surname8);
     strcpy_s(stud[i].group, sizeof(group8), group8);
