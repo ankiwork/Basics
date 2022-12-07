@@ -30,91 +30,91 @@ struct Student {
 
 void clear_buffer(void)
 {
-    int ch;
-    while ((ch = getchar()) != '\n' && ch != EOF);
+    /*int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF && ch != '\0');*/
+    fseek(stdin, 0, SEEK_END);
 }
 
 void input_string(char* dest, const char* msg) {
     cout << msg;
     clear_buffer();
     char buff[BUFFER_SIZE] = { };
-    gets_s(buff);
-    //strcpy(dest, buff);
+    fgets(buff, BUFFER_SIZE, stdin);
     strcpy_s(dest, sizeof(buff), buff);
 }
 
 int InitializingBasicStudents(Student* stud) {
     int i = 0;
     //1    
-    const char* name1 = "Thomas";
-    const char* surname1 = "John";
-    const char* group1 = "IVT";
-    strcpy(stud[i].surname, name1);
-    strcpy_s(stud[i].name, strlen(surname1), surname1);
-    strcpy_s(stud[i].group, strlen(group1), group1);
+    char name1[] = "Thomas";
+    char surname1[] = "John";
+    char group1[] = "IVT";
+    strcpy_s(stud[i].surname, sizeof(name1),name1);
+    strcpy_s(stud[i].name, sizeof(surname1), surname1);
+    strcpy_s(stud[i].group, sizeof(group1), group1);
     stud[i].number = 11;
     i++;
     //2
-    const char* name2 = "Swanson";
-    const char* surname2 = "Bradley";
-    const char* group2 = "IVT";
-    strcpy_s(stud[i].surname, strlen(name2), name2);
-    strcpy_s(stud[i].name, strlen(surname2), surname2);
-    strcpy_s(stud[i].group, strlen(group2), group2);
+    char name2[] = "Swanson";
+    char surname2[] = "Bradley";
+    char group2[] = "IVT";
+    strcpy_s(stud[i].surname, sizeof(name2), name2);
+    strcpy_s(stud[i].name, sizeof(surname2), surname2);
+    strcpy_s(stud[i].group, sizeof(group2), group2);
     stud[i].number = 11;
     i++;
     //3
-    const char* name3 = "Stewart";
-    const char* surname3 = "Jeffrey";
-    const char* group3 = "IVT";
-    strcpy_s(stud[i].surname, strlen(name3), name3);
-    strcpy_s(stud[i].name, strlen(surname3), surname3);
-    strcpy_s(stud[i].group, strlen(group3), group3);
+    char name3[] = "Stewart";
+    char surname3[] = "Jeffrey";
+    char group3[] = "IVT";
+    strcpy_s(stud[i].surname, sizeof(name3), name3);
+    strcpy_s(stud[i].name, sizeof(surname3), surname3);
+    strcpy_s(stud[i].group, sizeof(group3), group3);
     stud[i].number = 12;
     i++;
     //4
-    const char* name4 = "Evans";
-    const char* surname4 = "Kenneth";
-    const char* group4 = "PIN";
-    strcpy_s(stud[i].surname, strlen(name4), name4);
-    strcpy_s(stud[i].name, strlen(surname4), surname4);
-    strcpy_s(stud[i].group, strlen(group4), group4);
+    char name4[] = "Evans";
+    char surname4[] = "Kenneth";
+    char group4[] = "PIN";
+    strcpy_s(stud[i].surname, sizeof(name4), name4);
+    strcpy_s(stud[i].name, sizeof(surname4), surname4);
+    strcpy_s(stud[i].group, sizeof(group4), group4);
     stud[i].number = 12;
     i++;
     //5
-    const char* name5 = "Welch";
-    const char* surname5 = "Howard";
-    const char* group5 = "PIN";
-    strcpy_s(stud[i].surname, strlen(name5), name5);
-    strcpy_s(stud[i].name, strlen(surname5), surname5);
-    strcpy_s(stud[i].group, strlen(group5), group5);
+    char name5[] = "Welch";
+    char surname5[] = "Howard";
+    char group5[] = "PIN";
+    strcpy_s(stud[i].surname, sizeof(name5), name5);
+    strcpy_s(stud[i].name, sizeof(surname5), surname5);
+    strcpy_s(stud[i].group, sizeof(group5), group5);
     stud[i].number = 13;
     i++;
     //6
-    const char* name6 = "Burke";
-    const char* surname6 = "Adam";
-    const char* group6 = "PIN";
-    strcpy_s(stud[i].surname, strlen(name6), name6);
-    strcpy_s(stud[i].name, strlen(surname6), surname6);
-    strcpy_s(stud[i].group, strlen(group6), group6);
+    char name6[] = "Burke";
+    char surname6[] = "Adam";
+    char group6[] = "PIN";
+    strcpy_s(stud[i].surname, sizeof(name6), name6);
+    strcpy_s(stud[i].name, sizeof(surname6), surname6);
+    strcpy_s(stud[i].group, sizeof(group6), group6);
     stud[i].number = 13;
     i++;
     //7
-    const char* name7 = "Swanson";
-    const char* surname7 = "Bradley";
-    const char* group7 = "IVT";
-    strcpy_s(stud[i].surname, strlen(name7), name7);
-    strcpy_s(stud[i].name, strlen(surname7), surname7);
-    strcpy_s(stud[i].group, strlen(group7), group7);
+    char name7[] = "Swanson";
+    char surname7[] = "Bradley";
+    char group7[] = "IVT";
+    strcpy_s(stud[i].surname, sizeof(name7), name7);
+    strcpy_s(stud[i].name, sizeof(surname7), surname7);
+    strcpy_s(stud[i].group, sizeof(group7), group7);
     stud[i].number = 14;
     i++;
     //8
-    const char* name8 = "Slowly";
-    const char* surname8 = "Teddy";
-    const char* group8 = "IVT";
-    strcpy_s(stud[i].surname, strlen(name8), name8);
-    strcpy_s(stud[i].name, strlen(surname8), surname8);
-    strcpy_s(stud[i].group, strlen(group8), group8);
+    char name8[] = "Slowly";
+    char surname8[] = "Teddy";
+    char group8[] = "IVT";
+    strcpy_s(stud[i].surname, sizeof(name8), name8);
+    strcpy_s(stud[i].name, sizeof(surname8), surname8);
+    strcpy_s(stud[i].group, sizeof(group8), group8);
     stud[i].number = 14;
 
     return i;
@@ -123,16 +123,17 @@ int InitializingBasicStudents(Student* stud) {
 int AddingNewStudent(Student* stud, int i) {
     cout << "Студент номер " << i + 1 << endl;
     //cout << "Фамилия:      ";
-    /*input_string(stud[i].surname, "Фамилия:      ");
+    input_string(stud[i].surname, "Фамилия:      ");
     input_string(stud[i].name, "Имя:          ");
-    input_string(stud[i].group, "Группа:       ");*/
+    input_string(stud[i].group, "Группа:       ");
+    cout << "Номер группы: "; cin >> stud[i].number;
+
+    //cout << "Студент номер " << i + 1 << endl;
+    //cout << "Фамилия:      "; cin >> stud[i].surname;
+    //cout << "Имя:          "; cin >> stud[i].name;
+    //cout << "Группа:       "; cin >> stud[i].group;
     //cout << "Номер группы: "; cin >> stud[i].number;
 
-    cout << "Студент номер " << i + 1 << endl;
-    cout << "Фамилия:      "; cin >> stud[i].surname;
-    cout << "Имя:          "; cin >> stud[i].name;
-    cout << "Группа:       "; cin >> stud[i].group;
-    cout << "Номер группы: "; cin >> stud[i].number;
     i++;
     return i;
 }
@@ -191,7 +192,8 @@ int WorkingWithTheUser(Student* stud, int size, int number) {
         cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
         cout << "Определить всех студентов заданной группе и номеру группы     - [5]" << endl;
         cout << "Введите номер операции: ";
-        cin >> client;
+        //cin >> client;
+        scanf_s("%d", &client);
         system("cls");
         /*
         * Блок с операциями
