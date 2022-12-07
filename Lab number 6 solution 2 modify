@@ -118,6 +118,38 @@ int InitializingBasicStudents(Student* stud) {
     stud[i].number = 14;
 
     return i;
+
+    delete[] surname1;
+    delete[] name1;
+    delete[] group1;
+
+    delete[] surname2;
+    delete[] name2;
+    delete[] group2;
+
+    delete[] surname3;
+    delete[] name3;
+    delete[] group3;
+
+    delete[] surname4;
+    delete[] name4;
+    delete[] group4;
+
+    delete[] surname5;
+    delete[] name5;
+    delete[] group5;
+
+    delete[] surname6;
+    delete[] name6;
+    delete[] group6;
+
+    delete[] surname7;
+    delete[] name7;
+    delete[] group7;
+
+    delete[] surname8;
+    delete[] name8;
+    delete[] group8;
 }
 
 int AddingNewStudent(Student* stud, int i) {
@@ -170,7 +202,7 @@ void DetermineDirectionPreparationNumber(Student* stud, int number) {
     int number1 = 0;
     cout << "Введите номер группы: "; cin >> number1; cout << endl;
     for (int i = 0; i < number; i++) {
-        if ((strcmp(group, stud[i].group) == 0) && (number1 == stud[i].number)) {
+        if ((strcmp(group, stud[i].group) == 1) && (number1 == stud[i].number)) {
             cout << "Студент номер: " << i + 1 << endl;
             cout << "Фамилия:       " << stud[i].surname << endl;
             cout << "Имя:           " << stud[i].name << endl;
