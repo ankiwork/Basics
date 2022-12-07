@@ -1,0 +1,238 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+#define SURNAME 20
+#define NAME    10
+#define GROUP   5
+
+#define BUFFER_SIZE 300
+
+struct Student {
+    char* surname;
+    char* name;
+    char* group;
+    int   number;
+    Student() {
+        surname = new char[SURNAME];
+        name = new char[NAME];
+        group = new char[GROUP];
+        number = 0;
+    }
+    ~Student() {
+        delete[] surname;
+        delete[] name;
+        delete[] group;
+    }
+};
+
+void clear_buffer(void)
+{
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF);
+}
+
+void input_string(char* dest, const char* msg) {
+    cout << msg;
+    clear_buffer();
+    char buff[BUFFER_SIZE] = { };
+    gets_s(buff);
+    //strcpy(dest, buff);
+    strcpy_s(dest, sizeof(buff), buff);
+}
+
+int InitializingBasicStudents(Student* stud) {
+    int i = 0;
+    //1    
+    const char* name1 = "Thomas";
+    const char* surname1 = "John";
+    const char* group1 = "IVT";
+    strcpy(stud[i].surname, name1);
+    strcpy_s(stud[i].name, strlen(surname1), surname1);
+    strcpy_s(stud[i].group, strlen(group1), group1);
+    stud[i].number = 11;
+    i++;
+    //2
+    const char* name2 = "Swanson";
+    const char* surname2 = "Bradley";
+    const char* group2 = "IVT";
+    strcpy_s(stud[i].surname, strlen(name2), name2);
+    strcpy_s(stud[i].name, strlen(surname2), surname2);
+    strcpy_s(stud[i].group, strlen(group2), group2);
+    stud[i].number = 11;
+    i++;
+    //3
+    const char* name3 = "Stewart";
+    const char* surname3 = "Jeffrey";
+    const char* group3 = "IVT";
+    strcpy_s(stud[i].surname, strlen(name3), name3);
+    strcpy_s(stud[i].name, strlen(surname3), surname3);
+    strcpy_s(stud[i].group, strlen(group3), group3);
+    stud[i].number = 12;
+    i++;
+    //4
+    const char* name4 = "Evans";
+    const char* surname4 = "Kenneth";
+    const char* group4 = "PIN";
+    strcpy_s(stud[i].surname, strlen(name4), name4);
+    strcpy_s(stud[i].name, strlen(surname4), surname4);
+    strcpy_s(stud[i].group, strlen(group4), group4);
+    stud[i].number = 12;
+    i++;
+    //5
+    const char* name5 = "Welch";
+    const char* surname5 = "Howard";
+    const char* group5 = "PIN";
+    strcpy_s(stud[i].surname, strlen(name5), name5);
+    strcpy_s(stud[i].name, strlen(surname5), surname5);
+    strcpy_s(stud[i].group, strlen(group5), group5);
+    stud[i].number = 13;
+    i++;
+    //6
+    const char* name6 = "Burke";
+    const char* surname6 = "Adam";
+    const char* group6 = "PIN";
+    strcpy_s(stud[i].surname, strlen(name6), name6);
+    strcpy_s(stud[i].name, strlen(surname6), surname6);
+    strcpy_s(stud[i].group, strlen(group6), group6);
+    stud[i].number = 13;
+    i++;
+    //7
+    const char* name7 = "Swanson";
+    const char* surname7 = "Bradley";
+    const char* group7 = "IVT";
+    strcpy_s(stud[i].surname, strlen(name7), name7);
+    strcpy_s(stud[i].name, strlen(surname7), surname7);
+    strcpy_s(stud[i].group, strlen(group7), group7);
+    stud[i].number = 14;
+    i++;
+    //8
+    const char* name8 = "Slowly";
+    const char* surname8 = "Teddy";
+    const char* group8 = "IVT";
+    strcpy_s(stud[i].surname, strlen(name8), name8);
+    strcpy_s(stud[i].name, strlen(surname8), surname8);
+    strcpy_s(stud[i].group, strlen(group8), group8);
+    stud[i].number = 14;
+
+    return i;
+}
+
+int AddingNewStudent(Student* stud, int i) {
+    cout << "Студент номер " << i + 1 << endl;
+    //cout << "Фамилия:      ";
+    /*input_string(stud[i].surname, "Фамилия:      ");
+    input_string(stud[i].name, "Имя:          ");
+    input_string(stud[i].group, "Группа:       ");*/
+    //cout << "Номер группы: "; cin >> stud[i].number;
+
+    cout << "Студент номер " << i + 1 << endl;
+    cout << "Фамилия:      "; cin >> stud[i].surname;
+    cout << "Имя:          "; cin >> stud[i].name;
+    cout << "Группа:       "; cin >> stud[i].group;
+    cout << "Номер группы: "; cin >> stud[i].number;
+    i++;
+    return i;
+}
+
+void OutputtingInformationTable(Student* stud) {
+    int number = 0;
+    cout << "--------------------------" << endl;
+    cout << "Введите номер студента: "; cin >> number;
+    cout << "--------------------------" << endl;
+    cout << "Фамилия     |" << stud[number - 1].surname << endl;
+    cout << "Имя         |" << stud[number - 1].name << endl;
+    cout << "Группа      |" << stud[number - 1].group << endl;
+    cout << "Номер группы|" << stud[number - 1].number << endl;
+    cout << "--------------------------" << endl;
+}
+
+void DetermineDirectionPreparation(Student* stud, int number) {
+    char group[10];
+    cout << "Введите группу: "; cin >> group; cout << endl;
+    for (int i = 0; i < number; i++) {
+        if (strcmp(group, stud[i].group) == 0) {
+            cout << "Студент номер: " << i + 1 << endl;
+            cout << "Фамилия:       " << stud[i].surname << endl;
+            cout << "Имя:           " << stud[i].name << endl;
+            cout << "Группа:        " << stud[i].group << endl;
+            cout << "Номер группы:  " << stud[i].number << endl << endl;
+        }
+    }
+}
+
+void DetermineDirectionPreparationNumber(Student* stud, int number) {
+    char group[10];
+    cout << "Введите группу: "; cin >> group;
+    int number1 = 0;
+    cout << "Введите номер группы: "; cin >> number1; cout << endl;
+    for (int i = 0; i < number; i++) {
+        if ((strcmp(group, stud[i].group) == 0) && (number1 == stud[i].number)) {
+            cout << "Студент номер: " << i + 1 << endl;
+            cout << "Фамилия:       " << stud[i].surname << endl;
+            cout << "Имя:           " << stud[i].name << endl;
+            cout << "Группа:        " << stud[i].group << endl;
+            cout << "Номер группы:  " << stud[i].number << endl << endl;
+        }
+    }
+}
+
+int WorkingWithTheUser(Student* stud, int size, int number) {
+    int client = NULL;
+    while (client != 1) {
+        /*
+        * Вывод/Ввод информации, для реализации ниже
+        */
+        cout << "Закончить операцию                                            - [1]" << endl;
+        cout << "Добавить информацию о новом студенте                          - [2]" << endl;
+        cout << "Распечатать информацию о студенте в табличном виде            - [3]" << endl;
+        cout << "Определить всех студентов по заданному направлению подготовки - [4]" << endl;
+        cout << "Определить всех студентов заданной группе и номеру группы     - [5]" << endl;
+        cout << "Введите номер операции: ";
+        cin >> client;
+        system("cls");
+        /*
+        * Блок с операциями
+        */
+        switch (client) {
+        case 1: {
+            break;
+        }
+        case 2: {
+            number = AddingNewStudent(stud, number);
+            system("cls");
+            break;
+        }
+        case 3: {
+            OutputtingInformationTable(stud);
+            break;
+        }
+        case 4: {
+            DetermineDirectionPreparation(stud, number);
+            break;
+        }
+        case 5: {
+            DetermineDirectionPreparationNumber(stud, number);
+            break;
+        }
+        }
+    }
+    return number;
+}
+
+int main() {
+    //
+    setlocale(LC_ALL, "Russian");
+    /*
+    * Объявление структуры внутри main и начальное задание условий
+    */
+    const int size = 100;
+    Student* stud = new Student[size];
+    int number = InitializingBasicStudents(stud);  //Инициализируем "вручную" первые 8 студентов из условия задачи
+    /*
+    * Работа с пользователем(Реализация операций из условия)
+    */
+    WorkingWithTheUser(stud, size, 0);
+}
