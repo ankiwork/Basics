@@ -1,1 +1,132 @@
+#include <iostream>
+#include <fstream>
 
+#define SURNAME    500
+#define NAME       500
+#define GROUP      500
+#define MONTH      500
+#define BUFFERSIZE 500
+
+using namespace std;
+
+struct Fio {
+	char* surname;
+	char* name;
+    Fio() {
+        surname = new char[SURNAME];
+        name = new char[NAME];
+    }
+    ~Fio() {
+        delete[] surname;
+        delete[] name;
+    }
+};
+
+struct Date {
+    int day;
+    char* month;
+    int year;
+    Date() {
+        day = 0;
+        month = new char[MONTH];
+        year = 0;
+    }
+    ~Date() {
+        delete[] month;
+    }
+};
+
+struct Group {
+    char* group;
+    int groupnumber;
+    Group() {
+        group = new char[GROUP];
+        groupnumber = 0;
+    }
+    ~Group() {
+        delete[] group;
+    }
+};
+
+struct Student {
+    const int size = 100;
+    Fio* fio = new Fio[size];
+    Date* date = new Date[size];
+    Group* gr = new Group[size];
+};
+
+void ClearBuffer(void) {
+    fseek(stdin, 0, SEEK_END);
+}
+
+void InputString(char* dest, const char* msg) {
+    cout << msg;
+    ClearBuffer();
+    char buff[BUFFERSIZE] = { };
+    fgets(buff, BUFFERSIZE, stdin);
+    strcpy_s(dest, sizeof(buff), buff);
+}
+
+int AddingNewStudent(Student* stud, int i) {
+    cout << "Student number " << i + 1 << endl;
+    InputString(stud->fio[i].surname, "Surname:      ");
+    InputString(stud->fio[i].name,    "name:         ");
+    cout << "Day:          "; cin >> stud->date[i].day;
+    InputString(stud->date[i].month,  "Month:        ");
+    cout << "Year:         "; cin >> stud->date[i].year;
+    InputString(stud->gr[i].group, "Group:        ");
+    cout << "Group number: "; cin >> stud->gr[i].groupnumber;
+    system("cls");
+    i++;
+    return i;
+}
+
+void OutputtingInformationTable(Student* student) {
+    int number = 0;
+    cout << "--------------------------" << endl;
+    cout << "Enter student number: "; cin >> number;
+    cout << "--------------------------" << endl;
+    cout << "Surname        |" << student->fio [number - 1].surname;
+    cout << "Name           |" << student->fio [number - 1].name;
+    cout << "Day            |" << student->date[number - 1].day << endl;
+    cout << "Month          |" << student->date[number - 1].month;
+    cout << "Year           |" << student->date[number - 1].year << endl;
+    cout << "Group          |" << student->gr  [number - 1].group;
+    cout << "Number of group|" << student->gr  [number - 1].groupnumber << endl;
+    cout << "--------------------------" << endl;
+}
+
+void WorkingWithTheUser(Student* student, int number) {
+    int client = NULL;
+    while (client != 1) {
+        cout << "Finish the operation                                        - [1]" << endl;
+        cout << "Add information about a new student                         - [2]" << endl;
+        cout << "Print out the information about the student in tabular form - [3]" << endl;
+        cout << "Enter the transaction number: ";
+        scanf_s("%d", &client);
+        system("cls");
+        switch (client) {
+        case 1: {
+            break;
+        }
+        case 2: {
+            AddingNewStudent(student, number);
+            break;
+        }
+        case 3: {
+            OutputtingInformationTable(student);
+            break;
+        }
+        }
+    }
+}
+
+int main() {
+    const int size = 100;
+    Student* student = new Student[size];
+    ofstream info("Students.txt");
+    int number = 0;
+    WorkingWithTheUser(student, number);
+    info.close();
+    cout << "The data was successfully written to the Students.txt file\n";
+}
