@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #define SURNAME    500
 #define NAME       500
@@ -8,6 +9,9 @@
 #define BUFFERSIZE 500
 
 using namespace std;
+
+ofstream fout;
+ifstream fin;
 
 struct Fio {
 	char* surname;
@@ -67,15 +71,62 @@ void InputString(char* dest, const char* msg) {
     strcpy_s(dest, sizeof(buff), buff);
 }
 
+void OpeningFileRecording() {
+    fout.open("Students.txt", ofstream::app);
+    if (!fout.is_open()) {
+        cout << "Failed to open file for writing";
+    }
+    else {
+        cout << "File successfully opened for writing\n\n";
+    }
+}
+
+void ClosingFileRecording() {
+    fout.close(); 
+}
+
+void OpeningFileRead() {
+    fin.open("Students.txt");
+    if (!fin.is_open()) {
+        cout << "Failed to open file for writing";
+    }
+    else {
+        cout << "File successfully opened for writing\n\n";
+    }
+}
+
+void ClosingFileRead() {
+    fin.close();
+}
+
 int AddingNewStudent(Student* stud, int i) {
+    OpeningFileRecording();
     cout << "Student number " << i + 1 << endl;
+    //
     InputString(stud->fio[i].surname, "Surname:      ");
+    fout << stud->fio[i].surname;
+    //
     InputString(stud->fio[i].name,    "name:         ");
-    cout << "Day:          "; cin >> stud->date[i].day;
+    fout << stud->fio[i].name;
+    //
+    cout << "Day:          "; 
+    cin >> stud->date[i].day;
+    fout << stud->date[i].day << endl;
+    //
     InputString(stud->date[i].month,  "Month:        ");
-    cout << "Year:         "; cin >> stud->date[i].year;
+    fout << stud->date[i].month;
+    //
+    cout << "Year:         "; 
+    cin >> stud->date[i].year;
+    fout << stud->date[i].year << endl;
+    //
     InputString(stud->gr[i].group, "Group:        ");
-    cout << "Group number: "; cin >> stud->gr[i].groupnumber;
+    fout << stud->gr[i].group;
+    //
+    cout << "Group number: "; 
+    cin >> stud->gr[i].groupnumber;
+    fout << stud->gr[i].groupnumber << endl;
+    ClosingFileRecording();
     system("cls");
     i++;
     return i;
@@ -96,7 +147,18 @@ void OutputtingInformationTable(Student* student) {
     cout << "--------------------------" << endl;
 }
 
-void WorkingWithTheUser(Student* student, int number) {
+int FileDataProcessing(Student* stud, int number) {
+    OpeningFileRead();
+    string str;
+    while (!fin.eof()) {
+        str = "";
+        getline(fin, str);
+    }
+    ClosingFileRead();
+    return number;
+}
+
+int WorkingWithTheUser(Student* student, int number) {
     int client = NULL;
     while (client != 1) {
         cout << "Finish the operation                                        - [1]" << endl;
@@ -110,7 +172,7 @@ void WorkingWithTheUser(Student* student, int number) {
             break;
         }
         case 2: {
-            AddingNewStudent(student, number);
+            number = AddingNewStudent(student, number);
             break;
         }
         case 3: {
@@ -119,14 +181,22 @@ void WorkingWithTheUser(Student* student, int number) {
         }
         }
     }
+    return number;
 }
 
 int main() {
+    /*
+    * Инициализация структуры для 100 пользователей
+    */
     const int size = 100;
     Student* student = new Student[size];
-    ofstream info("Students.txt");
+    /*
+    * Инициализация считывания данных из файла перед работой пользователя с ними
+    */
     int number = 0;
-    WorkingWithTheUser(student, number);
-    info.close();
-    cout << "The data was successfully written to the Students.txt file\n";
+    number = FileDataProcessing(student, number);
+    /*
+    * Инициализация работы пользователя с данными структуры
+    */
+    number = WorkingWithTheUser(student, number);
 }
