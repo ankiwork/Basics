@@ -7,6 +7,7 @@
 #define GROUP      500
 #define MONTH      500
 #define BUFFERSIZE 500
+#define STR        500
 
 using namespace std;
 
@@ -86,7 +87,7 @@ void ClosingFileRecording() {
 }
 
 void OpeningFileRead() {
-    fin.open("Students.txt");
+    fin.open("Students.txt", ios::in);
     if (!fin.is_open()) {
         cout << "Failed to open file for writing";
     }
@@ -99,33 +100,53 @@ void ClosingFileRead() {
     fin.close();
 }
 
-int AddingNewStudent(Student* stud, int i) {
+/*string CheckingEntryByEnglish(Student* student, string check) {
+    for (int i = 0; i < check.length(); i++) {
+        while ((65 < check[i] && check[i] > 90) || (97 < check[i] && check[i] > 122)) {
+            cout << "The string can only contain English letters, try again:";
+            InputString(student->fio[i].surname, "Surname:      ");
+        }
+    }
+    return check;
+}*/
+
+/*void CheckingEntryByCorrectDate() {
+
+}*/
+
+int AddingNewStudent(Student* student, int i) {
+    // Открытие файла
     OpeningFileRecording();
     cout << "Student number " << i + 1 << endl;
-    //
-    InputString(stud->fio[i].surname, "Surname:      ");
-    fout << stud->fio[i].surname;
-    //
-    InputString(stud->fio[i].name,    "name:         ");
-    fout << stud->fio[i].name;
-    //
+    // Фамилия
+    InputString(student->fio[i].surname, "Surname:      ");
+    /*string check = student->fio[i].surname;
+    check = CheckingEntryByEnglish(student, check);*/
+    fout << student->fio[i].surname;
+    // Имя
+    InputString(student->fio[i].name,    "name:         ");
+    fout << student->fio[i].name;
+    // День рождения
     cout << "Day:          "; 
-    cin >> stud->date[i].day;
-    fout << stud->date[i].day << endl;
-    //
-    InputString(stud->date[i].month,  "Month:        ");
-    fout << stud->date[i].month;
-    //
+    cin >> student->date[i].day;
+    //CheckingEntryByCorrectDate();
+    fout << student->date[i].day << endl;
+    // Месяц рождения
+    InputString(student->date[i].month,  "Month:        ");
+    fout << student->date[i].month;
+    // Год рождения
     cout << "Year:         "; 
-    cin >> stud->date[i].year;
-    fout << stud->date[i].year << endl;
-    //
-    InputString(stud->gr[i].group, "Group:        ");
-    fout << stud->gr[i].group;
-    //
+    cin >> student->date[i].year;
+    //CheckingEntryByCorrectDate();
+    fout << student->date[i].year << endl;
+    // Группа
+    InputString(student->gr[i].group, "Group:        ");
+    fout << student->gr[i].group;
+    // Номер группы
     cout << "Group number: "; 
-    cin >> stud->gr[i].groupnumber;
-    fout << stud->gr[i].groupnumber << endl;
+    cin >> student->gr[i].groupnumber;
+    fout << student->gr[i].groupnumber << endl;
+    // Закрытие файла + очистка консоли
     ClosingFileRecording();
     system("cls");
     i++;
@@ -147,15 +168,41 @@ void OutputtingInformationTable(Student* student) {
     cout << "--------------------------" << endl;
 }
 
-int FileDataProcessing(Student* stud, int number) {
+int FileDataProcessing(Student* student, int number) {  // НЕ РАБОТАЕТ
     OpeningFileRead();
-    string str;
+    char* str = new char[STR];
     while (!fin.eof()) {
+        /*
+        * Проверка на пустотность файла
+        */
+        if (fin.peek() == EOF) { break; }
+        /*
+        * Чтение строк
+        */
         str = "";
-        getline(fin, str);
+        fin.getline(fin, str);
+        /*
+        * Запись данных в структуру
+        */
+        int i = 0;
+        if (i == 0) { student->fio[number].surname = str; }
+        if (i == 1) { student->fio[number].name; }
+        if (i == 2) { student->date[number].day; }
+        if (i == 3) { student->date[number].month; }
+        if (i == 4) { student->date[number].year; }
+        if (i == 5) { student->gr[number].group; }
+        if (i == 6) { student->gr[number].groupnumber; }
+        i++;
+        if (i == 6) { i = 0; }
+        number++;
     }
     ClosingFileRead();
     return number;
+}
+
+void CheckFileCreation() {
+    fout.open("Students.txt", ofstream::app);
+    fout.close();
 }
 
 int WorkingWithTheUser(Student* student, int number) {
@@ -190,6 +237,10 @@ int main() {
     */
     const int size = 100;
     Student* student = new Student[size];
+    /*
+    * Проверка файла/Создание файла
+    */
+    CheckFileCreation();
     /*
     * Инициализация считывания данных из файла перед работой пользователя с ними
     */
