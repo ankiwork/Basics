@@ -8,6 +8,7 @@
 #define MONTH      500
 #define BUFFERSIZE 500
 #define STR        500
+#define STRING     500
 
 using namespace std;
 
@@ -15,8 +16,8 @@ ofstream fout;
 ifstream fin;
 
 struct Fio {
-	char* surname;
-	char* name;
+    char* surname;
+    char* name;
     Fio() {
         surname = new char[SURNAME];
         name = new char[NAME];
@@ -83,7 +84,7 @@ void OpeningFileRecording() {
 }
 
 void ClosingFileRecording() {
-    fout.close(); 
+    fout.close();
 }
 
 void OpeningFileRead() {
@@ -124,18 +125,18 @@ int AddingNewStudent(Student* student, int i) {
     check = CheckingEntryByEnglish(student, check);*/
     fout << student->fio[i].surname;
     // Имя
-    InputString(student->fio[i].name,    "name:         ");
+    InputString(student->fio[i].name, "name:         ");
     fout << student->fio[i].name;
     // День рождения
-    cout << "Day:          "; 
+    cout << "Day:          ";
     cin >> student->date[i].day;
     //CheckingEntryByCorrectDate();
     fout << student->date[i].day << endl;
     // Месяц рождения
-    InputString(student->date[i].month,  "Month:        ");
+    InputString(student->date[i].month, "Month:        ");
     fout << student->date[i].month;
     // Год рождения
-    cout << "Year:         "; 
+    cout << "Year:         ";
     cin >> student->date[i].year;
     //CheckingEntryByCorrectDate();
     fout << student->date[i].year << endl;
@@ -143,7 +144,7 @@ int AddingNewStudent(Student* student, int i) {
     InputString(student->gr[i].group, "Group:        ");
     fout << student->gr[i].group;
     // Номер группы
-    cout << "Group number: "; 
+    cout << "Group number: ";
     cin >> student->gr[i].groupnumber;
     fout << student->gr[i].groupnumber << endl;
     // Закрытие файла + очистка консоли
@@ -158,44 +159,44 @@ void OutputtingInformationTable(Student* student) {
     cout << "--------------------------" << endl;
     cout << "Enter student number: "; cin >> number;
     cout << "--------------------------" << endl;
-    cout << "Surname        |" << student->fio [number - 1].surname;
-    cout << "Name           |" << student->fio [number - 1].name;
+    cout << "Surname        |" << student->fio[number - 1].surname;
+    cout << "Name           |" << student->fio[number - 1].name;
     cout << "Day            |" << student->date[number - 1].day << endl;
     cout << "Month          |" << student->date[number - 1].month;
     cout << "Year           |" << student->date[number - 1].year << endl;
-    cout << "Group          |" << student->gr  [number - 1].group;
-    cout << "Number of group|" << student->gr  [number - 1].groupnumber << endl;
+    cout << "Group          |" << student->gr[number - 1].group;
+    cout << "Number of group|" << student->gr[number - 1].groupnumber << endl;
     cout << "--------------------------" << endl;
 }
 
-int FileDataProcessing(Student* student, int number) {  // НЕ РАБОТАЕТ
+int FileDataProcessing(Student* student, int number) { 
     OpeningFileRead();
-    char* str = new char[STR];
-    while (!fin.eof()) {
-        /*
-        * Проверка на пустотность файла
-        */
-        if (fin.peek() == EOF) { break; }
-        /*
-        * Чтение строк
-        */
-        str = "";
-        fin.getline(fin, str);
-        /*
-        * Запись данных в структуру
-        */
-        int i = 0;
-        if (i == 0) { student->fio[number].surname = str; }
-        if (i == 1) { student->fio[number].name; }
-        if (i == 2) { student->date[number].day; }
-        if (i == 3) { student->date[number].month; }
-        if (i == 4) { student->date[number].year; }
-        if (i == 5) { student->gr[number].group; }
-        if (i == 6) { student->gr[number].groupnumber; }
-        i++;
-        if (i == 6) { i = 0; }
+    /*
+    * Проверка на пустотность файла
+    */
+    if (fin.peek() == EOF) { 
+        return 0; 
+    } 
+    else {
+        const int max_lenght = 1024;
+        char str[max_lenght];
+        while (fin.getline(student->fio[number].surname, max_lenght) && fin.getline(student->fio[number].name, max_lenght) && fin >> student->date[number].day) {
+            fin.getline(str, max_lenght);
+            for (int i = 0; i < 7; i++) {
+                if (i == 0) { student->fio[number].surname = str; }
+                if (i == 1) { student->fio[number].name = str; }
+                if (i == 2) { student->date[number].day; }
+                if (i == 3) { student->date[number].month = str; }
+                if (i == 4) { student->date[number].year; }
+                if (i == 5) { student->gr[number].group = str; }
+                if (i == 6) { student->gr[number].groupnumber; }
+            }
+        }
         number++;
     }
+    /*
+    * Запись данных в структуру
+    */
     ClosingFileRead();
     return number;
 }
