@@ -1,0 +1,237 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define BUFSIZE 1024
+char buffer[BUFSIZE];
+
+#define STUDENT_SIZE 100
+#define GROUP_SIZE 10
+
+char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+struct m_date {
+    int year;
+    char *month;
+    int day;
+};
+
+struct m_group {
+    int number;
+    char *name;
+};
+
+struct m_student {
+    char *fio;
+    struct m_date birthday;
+    int group_num;
+};
+
+
+int students_count = 0;
+struct m_student students[STUDENT_SIZE];
+
+int groups_count = 0;
+struct m_group groups[GROUP_SIZE];
+
+void trim_buffer(char *b) {
+    if (!b) return;
+    int len = strlen(b);
+    while (len > 0) {
+        if (isspace(*(b + len - 1))) {
+            *(b + len - 1) = '\0';
+            len--;
+        } else return;
+    }
+}
+
+int read_student(FILE *fin, struct m_student *st, int interactive) {
+    char *r;
+    if (fin == NULL) {
+        fprintf(stderr, "ERROR: bad file descriptor\n");
+        return 0;
+    }
+    if (st == NULL) {
+        fprintf(stderr, "ERROR: bad student pointer\n");
+        return 0;
+    }
+  
+    while (1) {
+        if (interactive) { printf("FIO: "); fseek(fin, 0, SEEK_END); }
+        r = fgets(buffer, BUFSIZE, fin);
+        if (!r) return 0;
+        trim_buffer(buffer);
+        if (!(st->fio = strdup(buffer))) {
+            fprintf(stderr,"ERROR: can't strdup string\n");
+            return 0;
+        } else break;
+    }
+
+    while (1) {
+        if (interactive) { printf("Day: "); fseek(fin, 0, SEEK_END); }
+        r = fgets(buffer, BUFSIZE, fin);
+        if (!r) return 0;
+        trim_buffer(buffer);
+        st->birthday.day = atoi(buffer);
+        if (st->birthday.day < 1 || st->birthday.day > 31) {
+            fprintf(stderr,"ERROR: wrong day of month\n");
+        } else break;
+    }
+
+    while (1) {
+        if (interactive) { printf("Month: "); fseek(fin, 0, SEEK_END); }
+        int month = -1;
+        r = fgets(buffer, BUFSIZE, fin);
+        if (!r) return 0;
+        trim_buffer(buffer);
+        // printf("entered: %s\n",buffer);
+        for (int j = 0; j < sizeof(months)/sizeof(months[0]); j++) {
+            if (strncmp(months[j], buffer, 3) == 0) {
+                month = j;
+                break;
+            }
+        }
+        if (month == -1) {
+            fprintf(stderr,"ERROR: Unknown month, try again\n");
+            continue;
+        }
+        st->birthday.month = months[month];
+        break;
+    }
+
+    while (1) {
+        if (interactive) { printf("Year: "); fseek(fin, 0, SEEK_END); }
+        r = fgets(buffer, BUFSIZE, fin);
+        if (!r) return 0;
+        trim_buffer(buffer);
+        st->birthday.year = atoi(buffer);
+        if (st->birthday.year < 1900 || st->birthday.year > 2022) {
+            fprintf(stderr,"ERROR: wrong year, can be in (1900..2022)\n");
+        } else break;
+    }
+
+    while(1) {
+        int group = -1;
+        if (interactive) { printf("Group name: "); fseek(fin, 0, SEEK_END); }
+        r = fgets(buffer, BUFSIZE, fin);
+        if (!r) return 0;
+        trim_buffer(buffer);
+        for (int j = 0; j < groups_count; j++) {
+            if (strcmp(groups[j].name, buffer) == 0) {
+                group = groups[j].number;
+                break;
+            }
+        }
+        if (group != -1) {
+            st->group_num = group;
+            break;
+        } else {
+            if (groups_count + 1 < GROUP_SIZE) {
+                fprintf(stderr,"INFO: Add new group %s in memory\n", buffer);
+                groups[groups_count].name = strdup(buffer);
+                groups[groups_count].number = groups_count + 1;
+                groups_count++;
+                st->group_num = groups_count;
+                break;
+            } else {
+                fprintf(stderr,"ERROR: can't add new group, group array overflow\n");
+                continue;
+            }
+        }
+    }
+
+    return 1;
+};
+
+void write_student(FILE *fout, struct m_student *st, int interactive) {
+    if (fout == NULL || st == NULL) {
+        fprintf(stderr,"ERROR: wrong input data for write_student\n");
+        return;
+    }
+
+    if (interactive) fprintf(fout,"FIO: ");
+    fprintf(fout, "%s\n", st->fio);
+    if (interactive) {
+        fprintf(fout,"Birthday: %d-%s-%d\n",st->birthday.day, st->birthday.month, st->birthday.year);
+    } else {
+        fprintf(fout, "%d\n%s\n%d\n", st->birthday.day, st->birthday.month, st->birthday.year);
+    }
+    if (interactive) {
+        fprintf(fout,"Group number: %d\n", st->group_num);
+        fprintf(fout,"Group name: ");
+    }
+    fprintf(fout, "%s\n",groups[st->group_num - 1].name);
+};
+
+int main() {
+    char *r;
+
+    FILE *fstud = fopen("students.txt","r");
+    if (fstud) {
+        while (1 == read_student(fstud, &students[students_count], 0)) { students_count++; }
+        fclose(fstud);
+    }
+
+    int exit_mode = 0;
+
+    while ( exit_mode != 1 ) {
+        printf("\nMain menu:\n"
+            "[1] Add information about a new student\n"
+            "[2] Print out the information about the student in tabular form\n"
+            "[3] Save data and exit\n"
+            "Enter your choice: "
+        );
+        fseek(stdin, 0, SEEK_END); // сброс буфера ввода от мусора
+        
+        r = fgets(buffer, BUFSIZE, stdin);
+        if (r == NULL) {
+            fprintf(stderr, "ERROR: can't read menu choice\n");
+        }
+
+        switch (atoi(buffer)) {
+            case 1:
+                if (students_count + 1 < STUDENT_SIZE) {
+                    printf("Enter information about %d student:\n", students_count + 1);
+                    if (1 == read_student(stdin, &students[students_count], 1)) {
+                        students_count++;
+                    } else {
+                        fprintf(stderr,"ERROR: can't read student %d\n", students_count + 1);
+                    }
+                } else {
+                    fprintf(stderr,"ERROR: can't add student, array overflow\n");
+                }
+                break;
+            case 2:
+                printf("Enter student number: ");
+                r = fgets(buffer, BUFSIZE, stdin);
+                if (r) {
+                    int num = atoi(buffer);
+                    if (num <= students_count) {
+                        printf("\nStudent %d\n================\n", num);
+                        write_student(stderr,&students[num - 1], 1);
+                        printf("\n");
+                    } else {
+                        fprintf(stderr,"ERROR: can't found student\n");
+                    }
+                }
+                break;
+            case 3:
+                printf("3 - Save and exit\n");
+                exit_mode = 1;
+                break;
+            default:
+                printf("Unknown choice, try again\n");
+        } // switch
+    } // while
+
+    if (students_count > 0) {
+        printf("Save information about students: %d\n", students_count);
+        fstud = fopen("students.txt","w");
+        for (int i = 0; i < students_count; i++) {
+            write_student(fstud, &students[i], 0);
+        };
+        fclose(fstud);
+    }
+
+}; // main()
